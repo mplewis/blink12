@@ -1,14 +1,20 @@
 <template>
-  <div class="grid">
-    <div class="row" v-for="(line, ln) in body" :key="ln">
-      <div class="col" v-for="(char, cn) in line" :key="cn">
-        <span class="char" v-html="char" />
+  <div>
+    <div class="grid">
+      <div class="row" v-for="(line, ln) in body" :key="ln">
+        <div class="col" v-for="(char, cn) in line" :key="cn">
+          <span class="char" v-html="char"/>
+        </div>
       </div>
     </div>
+    <Styler :printable="printable"/>
   </div>
 </template>
 
 <script lang="ts">
+import Styler from "./Styler.vue";
+import { render, blink, invert, link } from "../styler";
+
 const data = `
 12345678901234567890
 
@@ -27,10 +33,13 @@ function toChars(line: string) {
 }
 
 const body = data.split("\n").map(toChars);
+const printable = [invert(blink("1.")), " ", link("Scheduler", "#/scheduler")];
 
 export default {
+  components: { Styler },
   data: () => ({
-    body
+    body,
+    printable
   })
 };
 </script>

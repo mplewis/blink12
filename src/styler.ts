@@ -1,4 +1,4 @@
-type Printable = string | Tagged;
+export type Printable = string | Tagged;
 type PrintableType = "blink" | "invert" | "link";
 
 abstract class Tagged {
@@ -17,15 +17,15 @@ abstract class BasicTagged extends Tagged {
   }
 }
 
-class Blink extends BasicTagged {
+export class Blink extends BasicTagged {
   type: PrintableType = "blink";
 }
 
-class Invert extends BasicTagged {
+export class Invert extends BasicTagged {
   type: PrintableType = "invert";
 }
 
-class Link extends BasicTagged {
+export class Link extends BasicTagged {
   type: PrintableType = "link";
   href: string;
   constructor(body: Printable, href: string) {
