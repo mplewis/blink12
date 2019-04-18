@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Grid />
+    <Grid/>
   </div>
 </template>
 
@@ -17,8 +17,9 @@ export default class App extends Vue {}
 </script>
 
 <style lang="stylus">
-body
-  width 600px
-  margin-left auto
-  margin-right auto
+body {
+  width: 422px;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

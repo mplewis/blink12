@@ -2,7 +2,7 @@
   <div class="grid">
     <div class="row" v-for="(line, ln) in body" :key="ln">
       <div class="col" v-for="(char, cn) in line" :key="cn">
-        <span class="char" v-html="char" />
+        <span class="char" v-html="char"/>
       </div>
     </div>
   </div>
@@ -11,14 +11,14 @@
 <script lang="ts">
 const data = `
 12345678901234567890
-12345678901234567890
-12345678901234567890
-12345678901234567890
-12345678901234567890
-12345678901234567890
-1234567  01234567890
-12345678901234567890
-12345678901234567890
+
+<blink>VCR</blink> <invert>demo</invert>
+
+MENU:
+1) Record
+2) Playback
+3) Settings
+
 12345678901234567890
 `.trim();
 
@@ -46,10 +46,13 @@ export default {
 .grid {
   font-family: 'VCR';
   font-size: 36px;
+  line-height: 0.9;
 }
 
 .row {
-  height: 28px;
+  height: 36px;
+  width: 422px;
+  overflow: hidden;
 }
 
 .col {
