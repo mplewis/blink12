@@ -8,7 +8,7 @@ type Renderer = (item: Printable) => Renderable;
 
 const _render = (h: CreateElement): Renderer => {
   return function innerRender(item: Printable): Renderable {
-    if (typeof item === "string") return item;
+    if (typeof item === "string") return item.replace(/ /g, "\xa0");
 
     const next: Renderable = innerRender(item.body);
     if (item.type === "blink") return h("span", { class: "blink" }, [next]);

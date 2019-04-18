@@ -1,13 +1,8 @@
 <template>
-  <div>
-    <div class="grid">
-      <div class="row" v-for="(line, ln) in body" :key="ln">
-        <div class="col" v-for="(char, cn) in line" :key="cn">
-          <span class="char" v-html="char"/>
-        </div>
-      </div>
+  <div class="grid">
+    <div class="row" v-for="(line, i) in lines" :key="i">
+      <Styler :printable="line"/>
     </div>
-    <Styler :printable="printable"/>
   </div>
 </template>
 
@@ -15,41 +10,60 @@
 import Styler from "./Styler.vue";
 import { render, blink, invert, link } from "../styler";
 
-const data = `
-12345678901234567890
-
-Blink12 CSS VCR OSD
-
-MENU:
-1) Scheduler
-2) Clean Heads
-3) Settings
-
-12345678901234567890
-`.trim();
-
 function toChars(line: string) {
   return Array.from(line.replace(/ /g, "\xa0"));
 }
 
-const body = data.split("\n").map(toChars);
-const printable = [invert(blink("1.")), " ", link("Scheduler", "#/scheduler")];
+const lines = [
+  ["Blink12 VHS CSS FW"],
+  ["--------------------"],
+  [],
+  [invert("1."), " ", link("Scheduler", "#/scheduler")],
+  [invert("2."), " ", link("Playback Speed", "#/play")],
+  [invert("3."), " ", link("Clean Heads", "#/heads")],
+  [invert("4."), " ", link("Settings", "#/settings")],
+  [],
+  ["CH 3", "        ", blink("12:00 AM")]
+];
 
 export default {
   components: { Styler },
-  data: () => ({
-    body,
-    printable
-  })
+  data: () => ({ lines })
 };
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
+foreground = white;
+background = navy;
+
 @font-face {
   font-family: 'VCR';
   src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/225473/VCR_OSD_MONO_1.001.ttf');
   font-weight: normal;
   font-style: normal;
+}
+
+blink {
+  animation: 2s linear infinite condemned_blink_effect;
+}
+
+@keyframes blinky {
+  0% {
+    visibility: hidden;
+  }
+
+  25% {
+    visibility: hidden;
+  }
+
+  100% {
+    visibility: visible;
+  }
+}
+
+body {
+  color: foreground;
+  background-color: background;
 }
 
 .grid {
@@ -70,5 +84,19 @@ export default {
 
 .char {
   display: inline-block;
+}
+
+.invert {
+  color: background;
+  background-color: foreground;
+}
+
+.blink {
+  animation: 1s linear infinite blinky;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 </style>
