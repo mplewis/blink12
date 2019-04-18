@@ -1,8 +1,6 @@
 <template>
   <div class="grid">
-    <div class="row" v-for="(line, i) in lines" :key="i">
-      <Styler :printable="line"/>
-    </div>
+    <Styler v-for="(line, i) in lines" :key="i" :printable="line" />
   </div>
 </template>
 
@@ -37,6 +35,17 @@ export default {
 <style lang="stylus">
 foreground = white;
 background = navy;
+line-height = 0.95;
+size = 144px;
+screen-width-chars = 20;
+screen-height-chars = 9;
+// @ 144px
+char-width-144 = 84.3833;
+char-height-144 = 158.067;
+char-width = (size * char-width-144 / 144px);
+char-height = size * line-height;
+screen-width = screen-width-chars * char-width;
+screen-height = screen-height-chars * char-height;
 
 @font-face {
   font-family: 'VCR';
@@ -60,33 +69,27 @@ background = navy;
 }
 
 body {
-  color: foreground;
-  background-color: background;
+  background-color: black;
 }
 
 .grid {
+  display: inline-block;
+  color: foreground;
+  background-color: background;
   font-family: 'VCR';
-  font-size: 36px;
-  line-height: 0.9;
-}
-
-.row {
-  height: 36px;
-  width: 422px;
+  font-size: size;
+  line-height: line-height;
+  width: screen-width;
+  height: screen-height;
   overflow: hidden;
-}
-
-.col {
-  display: inline-block;
-}
-
-.char {
-  display: inline-block;
 }
 
 .invert {
   color: background;
   background-color: foreground;
+  // make the inverted boxes touch
+  padding-top: 0.03 * size;
+  padding-bottom: 0.1 * size;
 }
 
 .blink {

@@ -20,13 +20,20 @@ const _render = (h: CreateElement): Renderer => {
   };
 };
 
+function replaceEmpty(line: Printable[]): Printable[] {
+  const empty = line.length === 0;
+  const blank = line.length === 1 && line[0] === "";
+  if (!empty && !blank) return line;
+  return [" "];
+}
+
 @Component
 export default class Styler extends Vue {
   @Prop({ required: true }) printable!: Printable[];
 
   render(h: CreateElement) {
     const renderer = _render(h);
-    return h("div", this.printable.map(renderer));
+    return h("div", replaceEmpty(this.printable).map(renderer));
   }
 }
 </script>

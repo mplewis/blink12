@@ -15,11 +15,3 @@ import Screen from "./components/Screen.vue";
 })
 export default class App extends Vue {}
 </script>
-
-<style lang="stylus">
-body {
-  width: 422px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
