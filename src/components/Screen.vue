@@ -9,6 +9,7 @@
 <script lang="ts">
 import Styler from "./Styler.vue";
 import { render, blink, invert, link } from "../styler";
+import { Component, Vue } from "vue-property-decorator";
 
 function toChars(line: string) {
   return Array.from(line.replace(/ /g, "\xa0"));
@@ -27,6 +28,7 @@ const lines = [
 ];
 
 export default {
+  name: "Screen",
   components: { Styler },
   data: () => ({ lines })
 };
@@ -41,10 +43,6 @@ background = navy;
   src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/225473/VCR_OSD_MONO_1.001.ttf');
   font-weight: normal;
   font-style: normal;
-}
-
-blink {
-  animation: 2s linear infinite condemned_blink_effect;
 }
 
 @keyframes blinky {

@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Grid />
+    <Screen/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Grid from "./components/Grid.vue";
+import Screen from "./components/Screen.vue";
 
 @Component({
   components: {
-    Grid
+    Screen
   }
 })
 export default class App extends Vue {}
