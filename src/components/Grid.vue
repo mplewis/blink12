@@ -2,7 +2,7 @@
   <div class="grid">
     <div class="row" v-for="(line, ln) in body" :key="ln">
       <div class="col" v-for="(char, cn) in line" :key="cn">
-        <span class="char" v-html="char"/>
+        <span class="char" v-html="char" />
       </div>
     </div>
   </div>
@@ -12,11 +12,11 @@
 const data = `
 12345678901234567890
 
-<blink>VCR</blink> <invert>demo</invert>
+Blink12 CSS VCR OSD
 
 MENU:
-1) Record
-2) Playback
+1) Scheduler
+2) Clean Heads
 3) Settings
 
 12345678901234567890

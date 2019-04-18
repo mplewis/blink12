@@ -34,20 +34,26 @@ class Link extends BasicTagged {
   }
 }
 
-function blink(body: Printable) {
+export function blink(body: Printable) {
   return new Blink(body);
 }
 
-function invert(body: Printable) {
+export function invert(body: Printable) {
   return new Invert(body);
 }
 
-function link(body: Printable, href: string) {
+export function link(body: Printable, href: string) {
   return new Link(body, href);
 }
 
-const line: Printable[] = [
-  invert(blink("1.")),
-  " ",
-  link("Scheduler", "#/scheduler")
-];
+function _render(item: Printable): string {
+  if (typeof item === "string") return item;
+  const next: Printable = _render(item.body);
+  if (item.type === "blink") return `<blink>${next}</blink>`;
+  if (item.type === "invert") return `<invert>${next}</invert>`;
+  return `<a href="${(<Link>item).href}">${next}</invert>`;
+}
+
+export function render(line: Printable[]) {
+  return line.map(_render).join("");
+}
