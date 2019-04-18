@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <Grid/>
+    <Grid />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Grid from "./components/Grid";
+import Grid from "./components/Grid.vue";
 
 @Component({
   components: {
