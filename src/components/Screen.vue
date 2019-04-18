@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Styler from "./Styler.vue";
-import { render, blink, invert, link } from "../styler";
+import { blink, invert, link } from "../styler";
 import { Component, Vue } from "vue-property-decorator";
 
 function toChars(line: string) {

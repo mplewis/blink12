@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Printable, Link } from "../styler";
+import { Printable } from "../styler";
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { CreateElement, VNode } from "vue";
 
@@ -11,12 +11,16 @@ const _render = (h: CreateElement): Renderer => {
     if (typeof item === "string") return item.replace(/ /g, "\xa0");
 
     const next: Renderable = innerRender(item.body);
-    if (item.type === "blink") return h("span", { class: "blink" }, [next]);
-    if (item.type === "invert") return h("span", { class: "invert" }, [next]);
-
-    const { href } = <Link>item;
-    const attrs = { href };
-    return h("a", { attrs }, [next]);
+    if (item.kind === "blink") {
+      return h("span", { class: "blink" }, [next]);
+    } else if (item.kind === "invert") {
+      return h("span", { class: "invert" }, [next]);
+    } else if (item.kind === "link") {
+      return h("a", { attrs: { href: item.href } }, [next]);
+    } else {
+      const _: never = item;
+      return "";
+    }
   };
 };
 
