@@ -26,6 +26,6 @@ export function invert(body: Printable): Invert {
   return { kind: "invert", body };
 }
 
-export function link(body: Printable, href: string) {
+export function link(body: Printable, href: string): Link {
   return { kind: "link", body, href };
 }

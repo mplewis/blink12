@@ -6,37 +6,28 @@
 
 <script lang="ts">
 import Styler from "./Styler.vue";
-import { blink, invert, link } from "../styler";
-import { Component, Vue } from "vue-property-decorator";
+import { blink, invert, link, Printable } from "../styler";
+import { Vue, Component, Prop } from "vue-property-decorator";
 
 function toChars(line: string) {
   return Array.from(line.replace(/ /g, "\xa0"));
 }
 
-const lines = [
-  ["Blink12 VHS CSS FW"],
-  ["--------------------"],
-  [],
-  [invert("1."), " ", link("Scheduler", "#/scheduler")],
-  [invert("2."), " ", link("Playback Speed", "#/play")],
-  [invert("3."), " ", link("Clean Heads", "#/heads")],
-  [invert("4."), " ", link("Settings", "#/settings")],
-  [],
-  ["CH 3", "        ", blink("12:00 AM")]
-];
+export type PrintableLines = Printable[][];
 
-export default {
-  name: "Screen",
-  components: { Styler },
-  data: () => ({ lines })
-};
+@Component({
+  components: { Styler }
+})
+export default class Screen extends Vue {
+  @Prop({ required: true }) lines!: PrintableLines;
+}
 </script>
 
 <style lang="stylus">
 foreground = white;
 background = navy;
 line-height = 0.95;
-size = 144px;
+size = 60px;
 screen-width-chars = 20;
 screen-height-chars = 9;
 // @ 144px
