@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <Styler v-for="(line, i) in lines" :key="i" :printable="line" />
+    <Styler v-for="(line, i) in lines" :key="i" :printable="line"/>
   </div>
 </template>
 
@@ -15,32 +15,62 @@ function toChars(line: string) {
 
 export type PrintableLines = Printable[][];
 
-@Component({
-  components: { Styler }
-})
+interface ElemWithStyles {
+  style: CSSStyleDeclaration;
+}
+
+function isElemWithStyles(i: any): i is ElemWithStyles {
+  return (
+    i &&
+    i.style &&
+    i.style.constructor &&
+    i.style.constructor.name === "CSS2Properties"
+  );
+}
+
+@Component({ components: { Styler } })
 export default class Screen extends Vue {
   @Prop({ required: true }) lines!: PrintableLines;
+  @Prop({ default: "10" }) width!: number;
+  @Prop({ default: "12" }) height!: number;
+  @Prop({ default: "white" }) foreground!: string;
+  @Prop({ default: "navy" }) background!: string;
+  @Prop({ default: "144px" }) fontSize!: string;
+  @Prop({ default: 0.95 }) lineHeight!: number;
+
+  mounted() {
+    this.setVar("--foreground", this.foreground);
+    this.setVar("--background", this.background);
+    this.setVar("--size", this.fontSize);
+    this.setVar("--screen-width", this.width);
+    this.setVar("--screen-height", this.height);
+    this.setVar("--line-height", this.lineHeight);
+  }
+
+  setVar(name: string, value: { toString: () => string }) {
+    console.log({ name, value });
+    const el = this.$el;
+    if (!isElemWithStyles(el))
+      throw new Error("<Styler>.style is not CSS2Properties");
+    el.style.setProperty(name, value.toString());
+  }
 }
 </script>
 
-<style lang="stylus">
-foreground = white;
-background = navy;
-line-height = 0.95;
-size = 60px;
-screen-width-chars = 20;
-screen-height-chars = 9;
-// @ 144px
-char-width-144 = 84.3833;
-char-height-144 = 158.067;
-char-width = (size * char-width-144 / 144px);
-char-height = size * line-height;
-screen-width = screen-width-chars * char-width;
-screen-height = screen-height-chars * char-height;
+<style>
+:root {
+  --screen-width-px: calc(var(--screen-width) * var(--char-width));
+  --screen-height-px: calc(
+    var(--screen-height) * var(--size) * var(--line-height)
+  );
+  --char-width-144: 84.3833; /* height: 158.067 */
+  --char-width: calc((var(--size) * var(--char-width-144) / 144px));
+  --char-height: calc(var(--size) * var(--line-height));
+}
 
 @font-face {
-  font-family: 'VCR';
-  src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/225473/VCR_OSD_MONO_1.001.ttf');
+  font-family: "VCR";
+  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/225473/VCR_OSD_MONO_1.001.ttf");
   font-weight: normal;
   font-style: normal;
 }
@@ -49,38 +79,39 @@ screen-height = screen-height-chars * char-height;
   0% {
     visibility: hidden;
   }
-
   25% {
     visibility: hidden;
   }
-
   100% {
     visibility: visible;
   }
 }
 
-body {
-  background-color: black;
-}
-
 .grid {
   display: inline-block;
-  color: foreground;
-  background-color: background;
-  font-family: 'VCR';
-  font-size: size;
-  line-height: line-height;
-  width: screen-width;
-  height: screen-height;
   overflow: hidden;
+  color: var(--foreground);
+  background-color: var(--background);
+  font-family: "VCR";
+  font-size: var(--size);
+  line-height: var(--line-height);
+  !!/* what do I do here? */
+  /* width: calc(var(--screen-width-px) - 400); */
+  /* width: 200px; */
+  height: var(
+    --screen-height-px
+  );
 }
 
 .invert {
-  color: background;
-  background-color: foreground;
-  // make the inverted boxes touch
-  padding-top: 0.03 * size;
-  padding-bottom: 0.1 * size;
+  color: var(--background);
+  background-color: var(--foreground);
+  /* make the inverted boxes touch */
+  --padding-base: calc(
+    var(--line-height) * 2 * var(--size) * var(--line-height)
+  );
+  padding-top: calc(0.01 * var(--padding-base));
+  padding-bottom: calc(0.05 * var(--padding-base));
 }
 
 .blink {
