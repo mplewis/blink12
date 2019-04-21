@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <Styler v-for="(line, i) in lines" :key="i" :printable="line"/>
+    <Styler v-for="(line, i) in lines" :key="i" :printable="line" />
   </div>
 </template>
 
@@ -31,11 +31,11 @@ function isElemWithStyles(i: any): i is ElemWithStyles {
 @Component({ components: { Styler } })
 export default class Screen extends Vue {
   @Prop({ required: true }) lines!: PrintableLines;
-  @Prop({ default: "10" }) width!: number;
-  @Prop({ default: "12" }) height!: number;
+  @Prop({ default: 20 }) width!: number;
+  @Prop({ default: 9 }) height!: number;
   @Prop({ default: "white" }) foreground!: string;
   @Prop({ default: "navy" }) background!: string;
-  @Prop({ default: "144px" }) fontSize!: string;
+  @Prop({ default: "60px" }) fontSize!: string;
   @Prop({ default: 0.95 }) lineHeight!: number;
 
   mounted() {
@@ -58,16 +58,6 @@ export default class Screen extends Vue {
 </script>
 
 <style>
-:root {
-  --screen-width-px: calc(var(--screen-width) * var(--char-width));
-  --screen-height-px: calc(
-    var(--screen-height) * var(--size) * var(--line-height)
-  );
-  --char-width-144: 84.3833; /* height: 158.067 */
-  --char-width: calc((var(--size) * var(--char-width-144) / 144px));
-  --char-height: calc(var(--size) * var(--line-height));
-}
-
 @font-face {
   font-family: "VCR";
   src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/225473/VCR_OSD_MONO_1.001.ttf");
@@ -88,6 +78,14 @@ export default class Screen extends Vue {
 }
 
 .grid {
+  --char-width-144: 84.3833; /* height: 158.067 */
+  --screen-width-px: calc(var(--screen-width) * var(--char-width));
+  --screen-height-px: calc(
+    var(--screen-height) * var(--size) * var(--line-height)
+  );
+  --char-width: calc((var(--size) * var(--char-width-144) / 144));
+  --char-height: calc(var(--size) * var(--line-height));
+
   display: inline-block;
   overflow: hidden;
   color: var(--foreground);
@@ -95,12 +93,8 @@ export default class Screen extends Vue {
   font-family: "VCR";
   font-size: var(--size);
   line-height: var(--line-height);
-  !!/* what do I do here? */
-  /* width: calc(var(--screen-width-px) - 400); */
-  /* width: 200px; */
-  height: var(
-    --screen-height-px
-  );
+  height: var(--screen-height-px);
+  width: var(--screen-width-px);
 }
 
 .invert {

@@ -1,5 +1,5 @@
 <template>
-  <Screen :lines="lines"/>
+  <Screen :lines="lines" fontSize="40px" width="20" height="9" />
 </template>
 
 <script lang="ts">
