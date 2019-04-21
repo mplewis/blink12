@@ -1,32 +1,51 @@
 <template>
-  <Screen :lines="lines" fontSize="40px" width="20" height="9" />
+  <Screen :lines="lines" fontSize="40px" width="32" height="15" />
 </template>
 
 <script lang="ts">
+import dayjs from "dayjs";
 import { Component, Vue } from "vue-property-decorator";
 import { blink, invert, link, Printable } from "./styler";
 import Screen, { PrintableLines } from "./components/Screen.vue";
-
-const lines: PrintableLines = [
-  ["Blink12 VHS CSS FW"],
-  ["--------------------"],
-  [],
-  [invert("1."), " ", link("#/scheduler", "Scheduler")],
-  [invert("2."), " ", link("#/play", "Playback Speed")],
-  [
-    invert("3."),
-    " ",
-    link("#/heads", "Clean ", invert("H", blink("e")), "ads")
-  ],
-  [invert("4."), " ", link("#/settings", "Settings")],
-  [],
-  ["CH 3", "        ", blink("12:00 AM")]
-];
 
 @Component({
   components: { Screen }
 })
 export default class App extends Vue {
-  lines = lines;
+  time: any = blink("12:00 AM");
+
+  get lines() {
+    return [
+      [link("#/", "Matt Lewis"), "              ", this.time],
+      ["--------------------------------"],
+      [" Backend engineer, digital"],
+      [" enthusiast, and motorcyclist."],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [" ", link("#/work", invert("1."), " ", "Where I work")],
+      [" ", link("#/make", invert("2."), " ", "What I create")],
+      [" ", link("#/do", invert("3."), " ", "What I do")],
+      ["                            CH 3"]
+    ];
+  }
+
+  updateTime() {
+    let now = dayjs().format("h:mm A");
+    if (now.length < 8) now = ` ${now}`;
+    this.time = now;
+  }
+
+  mounted() {
+    setTimeout(() => {
+      this.updateTime();
+      setInterval(this.updateTime, 1000);
+    }, 4500);
+    console.log("ok!");
+  }
 }
 </script>

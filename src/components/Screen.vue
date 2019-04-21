@@ -48,7 +48,6 @@ export default class Screen extends Vue {
   }
 
   setVar(name: string, value: { toString: () => string }) {
-    console.log({ name, value });
     const el = this.$el;
     if (!isElemWithStyles(el))
       throw new Error("<Styler>.style is not CSS2Properties");
