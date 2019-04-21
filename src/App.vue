@@ -11,10 +11,14 @@ const lines: PrintableLines = [
   ["Blink12 VHS CSS FW"],
   ["--------------------"],
   [],
-  [invert("1."), " ", link("Scheduler", "#/scheduler")],
-  [invert("2."), " ", link("Playback Speed", "#/play")],
-  [invert("3."), " ", link("Clean Heads", "#/heads")],
-  [invert("4."), " ", link("Settings", "#/settings")],
+  [invert("1."), " ", link("#/scheduler", "Scheduler")],
+  [invert("2."), " ", link("#/play", "Playback Speed")],
+  [
+    invert("3."),
+    " ",
+    link("#/heads", "Clean ", invert("H", blink("e")), "ads")
+  ],
+  [invert("4."), " ", link("#/settings", "Settings")],
   [],
   ["CH 3", "        ", blink("12:00 AM")]
 ];

@@ -2,7 +2,7 @@ export type Printable = string | Tagged;
 type Tagged = Blink | Invert | Link;
 
 interface Content {
-  body: Printable;
+  body: Printable[];
 }
 
 interface Blink extends Content {
@@ -18,14 +18,14 @@ interface Link extends Content {
   href: string;
 }
 
-export function blink(body: Printable): Blink {
+export function blink(...body: Printable[]): Blink {
   return { kind: "blink", body };
 }
 
-export function invert(body: Printable): Invert {
+export function invert(...body: Printable[]): Invert {
   return { kind: "invert", body };
 }
 
-export function link(body: Printable, href: string): Link {
+export function link(href: string, ...body: Printable[]): Link {
   return { kind: "link", body, href };
 }
