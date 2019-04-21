@@ -1,6 +1,12 @@
 <template>
   <div class="grid">
-    <Styler v-for="(line, i) in lines" :key="i" :printable="line" />
+    <img
+      v-for="(img, i) in images"
+      :key="`img-${i}`"
+      :src="img.href"
+      :style="renderStyle(img)"
+    />
+    <Styler v-for="(line, i) in lines" :key="`line-${i}`" :printable="line" />
   </div>
 </template>
 
@@ -14,6 +20,26 @@ function toChars(line: string) {
 }
 
 export type PrintableLines = Printable[][];
+export type Image = {
+  href: string;
+  x: number;
+  y: number;
+  size: { kind: "width"; width: string } | { kind: "height"; height: string };
+};
+
+type ImageStyle =
+  | {
+      position: string;
+      left: string;
+      top: number;
+      width: string;
+    }
+  | {
+      position: string;
+      left: string;
+      top: number;
+      height: string;
+    };
 
 interface ElemWithStyles {
   style: CSSStyleDeclaration;
@@ -31,6 +57,7 @@ function isElemWithStyles(i: any): i is ElemWithStyles {
 @Component({ components: { Styler } })
 export default class Screen extends Vue {
   @Prop({ required: true }) lines!: PrintableLines;
+  @Prop({ default: () => [] }) images!: Image[];
   @Prop({ default: 20 }) width!: number;
   @Prop({ default: 9 }) height!: number;
   @Prop({ default: "white" }) foreground!: string;
@@ -52,6 +79,17 @@ export default class Screen extends Vue {
     if (!isElemWithStyles(el))
       throw new Error("<Styler>.style is not CSS2Properties");
     el.style.setProperty(name, value.toString());
+  }
+
+  renderStyle(img: Image): ImageStyle {
+    const stylePartial = {
+      position: "absolute",
+      left: `${img.x}px`,
+      top: `${img.y}px`
+    };
+    const { size } = img;
+    if (size.kind === "width") return { ...stylePartial, width: size.width };
+    return { ...stylePartial, height: size.height };
   }
 }
 </script>
