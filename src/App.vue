@@ -8,8 +8,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { blink, invert, link, Printable } from "./styler";
 import Screen, { PrintableLines, Image } from "./components/Screen.vue";
 
-import moto from "./assets/moto.jpg";
-console.log({ moto });
+const moto = require("./assets/moto.jpg");
 
 const images: Image[] = [
   {
@@ -30,19 +29,19 @@ export default class App extends Vue {
   get lines() {
     return [
       [link("#/", "Matt Lewis"), "              ", this.time],
-      ["--------------------------------"],
+      ["================================"],
       [" Software engineer, digital"],
       [" enthusiast, and motorcyclist."],
       [],
-      [" MENU:"],
+      [" MENU"],
+      [" ---------------"],
       [" ", link("#/work", invert("1:"), " My Work")],
       [" ", link("#/work", invert("2:"), " My Projects")],
       [" ", link("#/work", invert("3:"), " My Hobbies")],
       [],
-      [" (Use VCR"],
-      [" remote to"],
-      [" select item"],
-      [" from list)"],
+      [],
+      [],
+      [],
       ["                            CH 3"]
     ];
   }
