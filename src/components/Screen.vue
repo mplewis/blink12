@@ -31,13 +31,13 @@ type ImageStyle =
   | {
       position: string;
       left: string;
-      top: number;
+      top: string;
       width: string;
     }
   | {
       position: string;
       left: string;
-      top: number;
+      top: string;
       height: string;
     };
 
