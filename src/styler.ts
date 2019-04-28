@@ -16,6 +16,7 @@ interface Invert extends Content {
 interface Link extends Content {
   kind: "link";
   href: string;
+  external?: boolean;
 }
 
 export function blink(...body: Printable[]): Blink {
@@ -28,4 +29,8 @@ export function invert(...body: Printable[]): Invert {
 
 export function link(href: string, ...body: Printable[]): Link {
   return { kind: "link", body, href };
+}
+
+export function linkExt(href: string, ...body: Printable[]): Link {
+  return Object.assign({}, link(href, ...body), { external: true });
 }

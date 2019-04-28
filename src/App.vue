@@ -6,41 +6,9 @@
 </template>
 
 <script lang="ts">
-import dayjs from "dayjs";
 import { Component, Vue } from "vue-property-decorator";
-import { blink, invert, link, Printable } from "./styler";
 import Header from "./components/Header.vue";
-import Screen, { PrintableLines, Image } from "./components/Screen.vue";
 
-@Component({
-  components: { Screen, Header }
-})
-export default class App extends Vue {
-  images = [
-    {
-      href: require("./assets/moto.jpg"),
-      x: 400,
-      y: 190,
-      size: { kind: "height", height: "320px" }
-    }
-  ];
-
-  get lines() {
-    return [
-      [" Software engineer, digital"],
-      [" enthusiast, and motorcyclist."],
-      [],
-      [" MENU"],
-      [" ---------------"],
-      [" ", link("#/work", invert("1:"), " My Work")],
-      [" ", link("#/projects", invert("2:"), " My Projects")],
-      [" ", link("#/hobbies", invert("3:"), " My Hobbies")],
-      [],
-      [],
-      [],
-      [],
-      ["                            CH 3"]
-    ];
-  }
-}
+@Component({ components: { Header } })
+export default class App extends Vue {}
 </script>

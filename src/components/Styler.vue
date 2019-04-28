@@ -16,7 +16,10 @@ const _render = (h: CreateElement): Renderer => {
     } else if (item.kind === "invert") {
       return [h("span", { class: "invert" }, next)];
     } else if (item.kind === "link") {
-      return [h("a", { attrs: { href: item.href } }, next)];
+      const attrs: any = { href: item.href };
+      if (item.external) attrs.target = "_blank";
+      console.log(attrs);
+      return [h("a", { attrs }, next)];
     } else {
       const _: never = item;
       return [""];
