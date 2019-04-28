@@ -1,24 +1,27 @@
 <template>
-  <div>
-    <Header />
-    <router-view />
-  </div>
+  <Screen
+    :lines="lines"
+    :images="images"
+    fontSize="40px"
+    width="32"
+    height="13"
+    :style="style"
+  />
 </template>
 
 <script lang="ts">
 import dayjs from "dayjs";
 import { Component, Vue } from "vue-property-decorator";
-import { blink, invert, link, Printable } from "./styler";
-import Header from "./components/Header.vue";
-import Screen, { PrintableLines, Image } from "./components/Screen.vue";
+import { blink, invert, link, Printable } from "../styler";
+import Screen, { PrintableLines, Image } from "./Screen.vue";
 
 @Component({
-  components: { Screen, Header }
+  components: { Screen }
 })
 export default class App extends Vue {
   images = [
     {
-      href: require("./assets/moto.jpg"),
+      href: require("../assets/moto.jpg"),
       x: 400,
       y: 190,
       size: { kind: "height", height: "320px" }
@@ -39,7 +42,7 @@ export default class App extends Vue {
       [],
       [],
       [],
-      ["                            CH 3"]
+      ["REC                         CH 3"]
     ];
   }
 }

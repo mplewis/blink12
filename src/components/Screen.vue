@@ -132,6 +132,8 @@ export default class Screen extends Vue {
   line-height: var(--line-height);
   height: var(--screen-height-px);
   width: var(--screen-width-px);
+
+  margin-bottom: -8px; /* HACK */
 }
 
 .invert {
