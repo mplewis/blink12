@@ -20,7 +20,7 @@
     "@types/jest": "^23.1.4",
     "@vue/cli-plugin-babel": "^3.6.0",
     "@vue/cli-plugin-eslint": "^3.6.0",
-    "@vue/cli-plugin-typescript": "^3.6.0",
+    "@vue/cli-plugin-typescript": "^4.2.2",
     "@vue/cli-plugin-unit-jest": "^3.6.0",
     "@vue/cli-service": "^3.6.0",
     "@vue/eslint-config-prettier": "^4.0.1",
